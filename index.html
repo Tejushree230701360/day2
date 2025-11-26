@@ -1,30 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Finder</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event Finder — Beautiful Template</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1320;
+      --muted: #9aa4b2;
+      --accent-1: linear-gradient(135deg,#7b61ff 0%,#33d6a6 100%);
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:radial-gradient(1200px 600px at 10% 10%, rgba(123,97,255,0.08), transparent 8%), radial-gradient(900px 400px at 90% 90%, rgba(51,214,166,0.03), transparent 8%), var(--bg);}
+    a{color:inherit;text-decoration:none}
+    header{position:sticky;top:0;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-bottom:1px solid rgba(255,255,255,0.03);z-index:50}
+    .container{max-width:1100px;margin:0 auto;padding:28px 24px}
+
+    /* Navigation */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:var(--accent-1);display:grid;place-items:center;color:white;font-weight:800;font-size:18px;box-shadow:0 6px 20px rgba(34,41,47,0.6)}
+    nav ul{display:flex;gap:16px;align-items:center;margin:0;padding:0;list-style:none}
+    .cta{padding:8px 14px;border-radius:10px;background:linear-gradient(90deg,#4fd9b2,#3b8bff);color:#061023;font-weight:700}
+    .menu-toggle{display:none}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:70px 0}
+    .hero h1{font-size:44px;line-height:1.03;margin:0}
+    .hero p{color:var(--muted);margin-top:12px}
+    .search-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 30px rgba(8,12,20,0.6)}
+    .search-row{display:flex;gap:8px}
+    .field{flex:1;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .btn{padding:10px 14px;border-radius:10px;background:var(--accent-1);color:white;border:none;font-weight:700;cursor:pointer}
+
+    /* Features */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+    .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .card h3{margin:6px 0 0}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* Events list */
+    .events{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:40px 0}
+    .event{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .event .meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
+    .event h4{margin:8px 0}
+    .event p{color:var(--muted);margin:0}
+
+    /* Footer */
+    footer{padding:34px 0;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02)}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .events{grid-template-columns:repeat(2,1fr)}
+      .features{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:700px){
+      nav ul{display:none}
+      .menu-toggle{display:block;background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px}
+      .hero h1{font-size:30px}
+      .events{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .container{padding:18px}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;align-items:center}
+    .pill{padding:6px 10px;border-radius:999px;background:var(--glass);font-size:13px}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px}
+
+    /* subtle animation */
+    .logo, .card, .event{transition:transform .25s ease, box-shadow .25s ease}
+    .logo:hover{transform:translateY(-3px)}
+    .card:hover, .event:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
+  </style>
 </head>
 <body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">EF</div>
+        <div>
+          <div style="font-weight:800">Event Finder</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Discover campus events — never miss out</div>
+        </div>
+      </div>
 
-  <!-- Navbar -->
-  <div id="navbar"></div>
+      <nav aria-label="Main Navigation">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
 
-  <section class="hero">
-    <h1>Discover Events Around You</h1>
-    <p>Your one-stop platform for all college events.</p>
-  </section>
+      <div class="row">
+        <button class="ghost">Login</button>
+        <button class="cta">Create Event</button>
+        <button class="menu-toggle" aria-expanded="false" onclick="toggleMenu(this)">☰</button>
+      </div>
+    </div>
+  </header>
 
-  <section class="cards">
-    <div class="card">Technical Events</div>
-    <div class="card">Workshops</div>
-    <div class="card">Clubs</div>
-  </section>
+  <main class="container" id="home">
+    <section class="hero">
+      <div>
+        <h1>Beautiful, fast and simple — find events happening around campus.</h1>
+        <p>Event Finder helps clubs, departments and students discover and register for events easily. Built with accessibility and speed in mind.</p>
 
-  <!-- Footer -->
-  <div id="footer"></div>
+        <div class="search-card" style="margin-top:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px">
+            <div style="font-weight:700">Search events</div>
+            <div class="small muted">Filter by date, category or department</div>
+          </div>
+          <div class="search-row">
+            <input class="field" placeholder="What are you looking for? e.g. Hackathon, Workshop" />
+            <input class="field" type="date" />
+            <button class="btn">Search</button>
+          </div>
+        </div>
 
-  <script src="assets/js/script.js"></script>
+        <div class="features" aria-hidden="false">
+          <div class="card">
+            <div style="font-size:18px;font-weight:700">Clubs & Departments</div>
+            <div class="small muted">Organised lists so you can explore by club or department.</div>
+          </div>
+          <div class="card">
+            <div style="font-size:18px;font-weight:700">Easy Registration</div>
+            <div class="small muted">Click to register, get reminders and save to your calendar.</div>
+          </div>
+          <div class="card">
+            <div style="font-size:18px;font-weight:700">Event Management</div>
+            <div class="small muted">Club members can post events and manage attendees.</div>
+          </div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="search-card">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-weight:800">Next Big Event</div>
+              <div class="muted small">Nov 30, 2025 — TechCon 2025</div>
+            </div>
+            <div class="pill">Tech</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <h3>AI & Robotics Workshop</h3>
+            <p class="muted" style="margin-top:6px">Hands-on workshop covering robotics basics and AI model deployment.</p>
+
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="btn">Register</button>
+              <button class="ghost">Add to Calendar</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="card" style="display:flex;align-items:center;gap:12px">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="3" stroke="rgba(255,255,255,0.06)" stroke-width="1.2"/></svg>
+          <div>
+            <div style="font-weight:700">Clubs we're working with</div>
+            <div class="small muted">Rotaract · DEVS · EDC · Intellexa · Leo</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="events">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <h2 style="margin:0">Popular Events</h2>
+        <a href="#" class="small muted">See all events →</a>
+      </div>
+
+      <div class="events">
+        <article class="event" aria-labelledby="e1">
+          <div class="meta"><div class="pill">Workshop</div><div> · Nov 28</div></div>
+          <h4 id="e1">Full Stack Bootcamp</h4>
+          <p>3-day hands-on bootcamp on modern web development stacks. Limited seats.</p>
+          <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center">
+            <div class="muted small">CSE Dept · Rotaract</div>
+            <div><button class="btn">Register</button></div>
+          </div>
+        </article>
+
+        <article class="event" aria-labelledby="e2">
+          <div class="meta"><div class="pill">Technical</div><div> · Dec 02</div></div>
+          <h4 id="e2">Drone Design Challenge</h4>
+          <p>Design, build and race small drones — prizes for best design and speed.</p>
+          <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center">
+            <div class="muted small">AERO Dept · EDC</div>
+            <div><button class="btn">Register</button></div>
+          </div>
+        </article>
+
+        <article class="event" aria-labelledby="e3">
+          <div class="meta"><div class="pill">Cultural</div><div> · Dec 10</div></div>
+          <h4 id="e3">Cultural Night</h4>
+          <p>An evening of music, dance and food stalls — open to all students.</p>
+          <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center">
+            <div class="muted small">All Departments</div>
+            <div><button class="btn">Register</button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="about" style="margin-top:18px">
+      <h2>About Event Finder</h2>
+      <p class="muted">Event Finder centralises campus event information so every student can discover opportunities — whether they follow clubs on social media or not. Club members have a simple flow to post events, manage registrations and message attendees.</p>
+
+      <div style="display:flex;gap:16px;margin-top:18px;flex-wrap:wrap">
+        <div class="card" style="flex:1;min-width:240px">
+          <h3>For Students</h3>
+          <p class="muted">Find events by interest, save favourites and get reminders.</p>
+        </div>
+        <div class="card" style="flex:1;min-width:240px">
+          <h3>For Club Leads</h3>
+          <p class="muted">Create events, review registrations and export attendee lists.</p>
+        </div>
+        <div class="card" style="flex:1;min-width:240px">
+          <h3>For Admins</h3>
+          <p class="muted">Moderation tools, analytics and announcements to the entire campus.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:30px">
+      <h2>Contact & Feedback</h2>
+      <p class="muted">Have ideas? Want your club listed? Drop us a line — we love collaboration.</p>
+
+      <form style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;max-width:800px">
+        <input class="field" placeholder="Your name" required />
+        <input class="field" placeholder="Email" type="email" required />
+        <input class="field" placeholder="Club / Department (optional)" />
+        <input class="field" placeholder="Subject" />
+        <textarea class="field" placeholder="Message" style="grid-column:1/3;min-height:110px"></textarea>
+        <div style="grid-column:1/3;display:flex;justify-content:flex-end">
+          <button class="btn" type="submit">Send message</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-weight:800">Event Finder</div>
+        <div class="muted small">Created with ❤️ for campus communities</div>
+      </div>
+      <div class="muted small">© 2025 Event Finder · Built by BIC</div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu(btn){
+      const nav = document.querySelector('nav ul');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      if(nav.style.display === 'flex') nav.style.display = 'none'; else nav.style.display = 'flex';
+    }
+
+    // smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      })
+    })
+
+    // simple form submit handler (demo)
+    document.querySelector('form')?.addEventListener('submit', e=>{
+      e.preventDefault();
+      alert('Thanks — your message has been received (demo).');
+      e.target.reset();
+    })
+  </script>
 </body>
 </html>
